@@ -90,8 +90,9 @@ func GetEpisodeInfo(filename string) (TVEpisodeInfo, error) {
 	return retval, nil
 }
 
-// For a given compiled regex, and string return the named match
-// groups and their associated values
+// getMatches return the named match groups and
+// their associated values for a given compiled
+//	regex, and test string
 func getMatches(rx *regexp.Regexp, findString string) map[string]string {
 	rxMatches := make(map[string]string)
 
