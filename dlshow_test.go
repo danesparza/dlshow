@@ -23,29 +23,40 @@ func TestGetEpisodeInfo_InvalidFilename_ReturnsError(t *testing.T) {
 }
 
 func TestGetEpisodeInfo_ValidFilename_ReturnsEpisodeInfo(t *testing.T) {
+
 	//	Arrange
-	filename := "Once.Upon.a.Time.S03E01.720p.HDTV.X264-DIMENSION.mkv"
-
-	//	Act
-	showInfo, err := dlshow.GetEpisodeInfo(filename)
-
-	//	Assert
-	if err != nil {
-		t.Errorf("Should have returned show info: %s", filename)
+	episodeTests := []struct {
+		filename              string
+		expectedShowName      string
+		expectedSeasonNumber  int
+		expectedEpisodeNumber int
+	}{
+		//	Episode tests
+		{"Once.Upon.a.Time.S03E01.720p.HDTV.X264-DIMENSION.mkv", "Once Upon a Time", 3, 1},
+		{"The.Big.Bang.Theory.S01E17.720p.HDTV.X264-MRSK.mkv", "The Big Bang Theory", 1, 17},
 	}
 
-	if showInfo.ParseType != dlshow.ParseTypeSE {
-		t.Errorf("Incorrect parse type: %v", showInfo.ParseType)
-	}
-	if showInfo.ShowName != "Once Upon a Time" {
-		t.Errorf("Incorrect show name parsed: %v", showInfo.ShowName)
-	}
-	if showInfo.SeasonNumber != 3 {
-		t.Errorf("Expected season 3 but got %v instead", showInfo.SeasonNumber)
-	}
+	for _, test := range episodeTests {
 
-	if showInfo.EpisodeNumber != 1 {
-		t.Errorf("Expected episode 1 but got %v instead", showInfo.EpisodeNumber)
+		//	Act
+		showInfo, err := dlshow.GetEpisodeInfo(test.filename)
+
+		//	Assert
+		if err != nil {
+			t.Errorf("Should have returned show info: %s", test.filename)
+		}
+
+		if showInfo.ShowName != test.expectedShowName {
+			t.Errorf("Expected show %v but got %v instead", test.expectedShowName, showInfo.ShowName)
+		}
+
+		if showInfo.SeasonNumber != test.expectedSeasonNumber {
+			t.Errorf("Expected season %v but got %v instead", test.expectedSeasonNumber, showInfo.SeasonNumber)
+		}
+
+		if showInfo.EpisodeNumber != test.expectedEpisodeNumber {
+			t.Errorf("Expected episode %v but got %v instead", test.expectedEpisodeNumber, showInfo.EpisodeNumber)
+		}
 	}
 }
 
