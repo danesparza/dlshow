@@ -1,6 +1,7 @@
 package dlshow_test
 
 import (
+	"runtime"
 	"testing"
 
 	"github.com/danesparza/dlshow"
@@ -9,6 +10,10 @@ import (
 //	GetEpisodeInfo should return an error if it
 //	isn't passed a valid filename
 func TestGetEpisodeInfo_InvalidFilename_ReturnsError(t *testing.T) {
+
+	if runtime.GOOS != "windows" {
+		t.Skip("Skipping backslash filename tests: Not on Windows")
+	}
 
 	//	Arrange
 	filename := "c:\\temp\\"
