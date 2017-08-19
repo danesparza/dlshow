@@ -1,4 +1,4 @@
-# dlshow
+# dlshow [![CircleCI](https://circleci.com/gh/danesparza/dlshow.svg?style=shield)](https://circleci.com/gh/danesparza/dlshow)
 Go package to help parse downloaded TV show filenames
 
 ## Example
