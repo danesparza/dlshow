@@ -35,10 +35,12 @@ func TestGetEpisodeInfo_ValidFilename_ReturnsEpisodeInfo(t *testing.T) {
 		expectedShowName      string
 		expectedSeasonNumber  int
 		expectedEpisodeNumber int
+		parseType             int
 	}{
 		//	Episode tests
-		{"Once.Upon.a.Time.S03E01.720p.HDTV.X264-DIMENSION.mkv", "Once Upon a Time", 3, 1},
-		{"The.Big.Bang.Theory.S01E17.720p.HDTV.X264-MRSK.mkv", "The Big Bang Theory", 1, 17},
+		{"Once.Upon.a.Time.S03E01.720p.HDTV.X264-DIMENSION.mkv", "Once Upon a Time", 3, 1, 1},
+		{"The.Big.Bang.Theory.S01E17.720p.HDTV.X264-MRSK.mkv", "The Big Bang Theory", 1, 17, 1},
+		{"PBS.The.Civil.War.by.Ken.Burns.1of9.The.Cause.DVDRip.x264.AAC.MVGroup.org.mkv", "", 0, 0, 0},
 	}
 
 	for _, test := range episodeTests {
@@ -61,6 +63,10 @@ func TestGetEpisodeInfo_ValidFilename_ReturnsEpisodeInfo(t *testing.T) {
 
 		if showInfo.EpisodeNumber != test.expectedEpisodeNumber {
 			t.Errorf("Expected episode %v but got %v instead", test.expectedEpisodeNumber, showInfo.EpisodeNumber)
+		}
+
+		if showInfo.ParseType != test.parseType {
+			t.Errorf("Expected parseType %v but got %v instead", test.parseType, showInfo.ParseType)
 		}
 	}
 }
